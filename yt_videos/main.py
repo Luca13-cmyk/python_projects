@@ -47,11 +47,11 @@ def start_download_video() -> None:
         title.configure(text=ytObject.title, text_color="white")
         finishLabel.configure(text="")
         finishLabel.configure(text="Finalizado!")
+	on_completed()
 
     except:
         finishLabel.configure(text="Erro ao baixar!", text_color="red")
-    finally:
-        on_completed()
+        
 
 
 def start_download_audio() -> None:
