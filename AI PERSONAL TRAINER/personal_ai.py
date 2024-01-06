@@ -9,15 +9,28 @@ from mediapipe.framework.formats import landmark_pb2
 import numpy as np
 import threading
 import queue
+import sys
+import os
 
-model_path="pose_landmarker_full.task"
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS2
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+
+model_path=resource_path("pose_landmarker_full.task")
+# model_path="https://uploadthing.com/f/7e01619c-99b3-4502-91bb-7551fdcb1de2-r98ovv.task"
 
 class PersonalAI:
-    def __init__(self, file_name="The Perfect Push Up _ Do it right! - YouTube e mais 13 páginas - Pessoal — Microsoft​ Edge 2023-12-29 02-38-27.mp4"):
-        self.file_name = file_name
+    def __init__(self, file_name="Build a massive chest with ONLY push ups.mp4"):
+        self.file_name = resource_path(file_name)
         self.image_q = queue.Queue()
-        model_path="pose_landmarker_full.task"
 
         self.options = python.vision.PoseLandmarkerOptions(
             base_options=python.BaseOptions(model_asset_path=model_path),
